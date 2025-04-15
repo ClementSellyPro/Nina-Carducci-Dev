@@ -61,9 +61,9 @@
     $(".gallery").on("click", ".mg-prev", () =>
       $.fn.mauGallery.methods.prevImage(options.lightboxId)
     );
-    $(".gallery").on("click", ".mg-next", () =>
-      $.fn.mauGallery.methods.nextImage(options.lightboxId)
-    );
+    $(".gallery").on("click", ".mg-next", () => {
+      $.fn.mauGallery.methods.nextImage(options.lightboxId);
+    });
   };
   $.fn.mauGallery.methods = {
     createRowWrapper(element) {
@@ -144,9 +144,8 @@
           index = i;
         }
       });
-      next =
-        imagesCollection[index] ||
-        imagesCollection[imagesCollection.length - 1];
+      next = imagesCollection[index - 1];
+      if (index - 1 < 0) next = imagesCollection[imagesCollection.length - 1];
       $(".lightboxImage").attr("src", $(next).attr("src"));
     },
     nextImage() {
@@ -179,7 +178,8 @@
           index = i;
         }
       });
-      next = imagesCollection[index] || imagesCollection[0];
+      next = imagesCollection[index + 1];
+      if (index + 1 > imagesCollection.length - 1) next = imagesCollection[0];
       $(".lightboxImage").attr("src", $(next).attr("src"));
     },
     createLightBox(gallery, lightboxId, navigation) {
